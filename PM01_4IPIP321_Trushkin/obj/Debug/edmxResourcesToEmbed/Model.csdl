@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="user51Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Apartments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AddressID" Type="Int32" />
+    <NavigationProperty Name="Buildings" Relationship="Self.FK_Apartments_Buildings" FromRole="Apartments" ToRole="Buildings" />
+  </EntityType>
+  <EntityType Name="Buildings">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="StartDate" Type="DateTime" Precision="3" />
+    <Property Name="Floors" Type="Int32" />
+    <Property Name="Apartments" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="Area" Type="Double" />
+    <NavigationProperty Name="Apartments1" Relationship="Self.FK_Apartments_Buildings" FromRole="Buildings" ToRole="Apartments" />
+    <NavigationProperty Name="Citizens" Relationship="Self.FK_Citizens_Buildings" FromRole="Buildings" ToRole="Citizens" />
+  </EntityType>
+  <EntityType Name="Citizens">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApartmentID" Type="Int32" />
+    <NavigationProperty Name="Buildings" Relationship="Self.FK_Citizens_Buildings" FromRole="Citizens" ToRole="Buildings" />
+    <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Citizens" FromRole="Citizens" ToRole="Payments" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Citizens" FromRole="Citizens" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Employers">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Employers" FromRole="Employers" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Payments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="NotPayed" Type="Double" />
+    <Property Name="Payed" Type="Double" />
+    <Property Name="Period" Type="DateTime" Precision="0" />
+    <Property Name="CitizenID" Type="Int32" />
+    <NavigationProperty Name="Citizens" Relationship="Self.FK_Payments_Citizens" FromRole="Payments" ToRole="Citizens" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CitizenID" Type="Int32" />
+    <Property Name="StatusID" Type="Int32" />
+    <Property Name="EmployerID" Type="Int32" />
+    <NavigationProperty Name="Citizens" Relationship="Self.FK_Requests_Citizens" FromRole="Requests" ToRole="Citizens" />
+    <NavigationProperty Name="Employers" Relationship="Self.FK_Requests_Employers" FromRole="Requests" ToRole="Employers" />
+    <NavigationProperty Name="Statuses" Relationship="Self.FK_Requests_Statuses" FromRole="Requests" ToRole="Statuses" />
+  </EntityType>
+  <EntityType Name="Statuses">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK_Requests_Statuses" FromRole="Statuses" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Apartments_Buildings">
+    <End Role="Buildings" Type="Self.Buildings" Multiplicity="0..1" />
+    <End Role="Apartments" Type="Self.Apartments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buildings">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Apartments">
+        <PropertyRef Name="AddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Citizens_Buildings">
+    <End Role="Buildings" Type="Self.Buildings" Multiplicity="0..1" />
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Buildings">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Citizens">
+        <PropertyRef Name="ApartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Payments_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="0..1" />
+    <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Payments">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Citizens">
+    <End Role="Citizens" Type="Self.Citizens" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Citizens">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="CitizenID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Employers">
+    <End Role="Employers" Type="Self.Employers" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employers">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="EmployerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Requests_Statuses">
+    <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statuses">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="StatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Apartments" EntityType="Self.Apartments" />
+    <EntitySet Name="Buildings" EntityType="Self.Buildings" />
+    <EntitySet Name="Citizens" EntityType="Self.Citizens" />
+    <EntitySet Name="Employers" EntityType="Self.Employers" />
+    <EntitySet Name="Payments" EntityType="Self.Payments" />
+    <EntitySet Name="Requests" EntityType="Self.Requests" />
+    <EntitySet Name="Statuses" EntityType="Self.Statuses" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_Apartments_Buildings" Association="Self.FK_Apartments_Buildings">
+      <End Role="Buildings" EntitySet="Buildings" />
+      <End Role="Apartments" EntitySet="Apartments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Citizens_Buildings" Association="Self.FK_Citizens_Buildings">
+      <End Role="Buildings" EntitySet="Buildings" />
+      <End Role="Citizens" EntitySet="Citizens" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Payments_Citizens" Association="Self.FK_Payments_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Payments" EntitySet="Payments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Citizens" Association="Self.FK_Requests_Citizens">
+      <End Role="Citizens" EntitySet="Citizens" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Employers" Association="Self.FK_Requests_Employers">
+      <End Role="Employers" EntitySet="Employers" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Requests_Statuses" Association="Self.FK_Requests_Statuses">
+      <End Role="Statuses" EntitySet="Statuses" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

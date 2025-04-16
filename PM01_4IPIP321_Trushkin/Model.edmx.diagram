@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="30c05c5b3e314f45bf9a16f88b2c9e2c" Name="Diagram1">
+        <EntityTypeShape EntityType="user51Model.Apartments" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="user51Model.Buildings" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="user51Model.Citizens" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="user51Model.Employers" Width="1.5" PointX="6" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="user51Model.Payments" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="user51Model.Requests" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="user51Model.Statuses" Width="1.5" PointX="6" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="user51Model.sysdiagrams" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="user51Model.FK_Apartments_Buildings" ManuallyRouted="false" />
+        <AssociationConnector Association="user51Model.FK_Citizens_Buildings" ManuallyRouted="false" />
+        <AssociationConnector Association="user51Model.FK_Payments_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="user51Model.FK_Requests_Citizens" ManuallyRouted="false" />
+        <AssociationConnector Association="user51Model.FK_Requests_Employers" ManuallyRouted="false" />
+        <AssociationConnector Association="user51Model.FK_Requests_Statuses" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
